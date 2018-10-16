@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import socket, time, datetime, random, platform, argparse
+import socket, time, datetime, random, platform, argparse, getpass, sys
 from termcolor import colored
 from pprint import pprint
 
@@ -45,9 +45,13 @@ def log(msg, level):
 		exit(1)
 
 
-log('Execution begin.', 1)
-time.sleep(3)
-log('Testing Warning', 2)
-time.sleep(3)
-log('Testing Critical', 3)
-
+def verifyenv():
+	if not platform.system() == 'Linux':
+		log('Unsupported Operation System.',3)
+	if not sys.version_info[0] == 3:
+		log('Server requires python3.',3)
+	if getpass.getuser() == 'root':
+		if platform.node() == 'kali':
+			log('Terms Violation: This application may not be run on Kali', 3)
+		if not args.debug:
+			log('Server is running as root and is in production mode, please don\'t do that.')
