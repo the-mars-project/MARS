@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-import socket, time, datetime, random, platform, argparse, termcolor
+import socket, time, datetime, random, platform, argparse
+from termcolor import colored
 from pprint import pprint
 
 
@@ -29,12 +30,12 @@ def log(msg, level):
 			elif level == 2:
 				level_word = 'Warning'
 				fullmsg = '[{}][{}] {}, '.format(datetime.datetime.today().strftime('%a %b %d %H:%M:%S %Y'), level_word, msg)
-				print(fullmsg)
+				print(colored(fullmsg,'red'))
 				logfile.writelines(fullmsg)
 			elif level == 3:
 				level_word = 'Critical'
 				fullmsg = '[{}][{}] {}, '.format(datetime.datetime.today().strftime('%a %b %d %H:%M:%S %Y'), level_word, msg)
-				print('{}\nCritical Error Encountered, Press any key to exit...'.format(fullmsg))
+				print(colored('{}\nCritical Error Encountered, Press any key to exit...'.format(fullmsg),'red'))
 				if args.debug:
 					pprint(vars())
 				input('')
@@ -49,4 +50,4 @@ time.sleep(3)
 log('Testing Warning', 2)
 time.sleep(3)
 log('Testing Critical', 3)
-pprint(vars())
+
